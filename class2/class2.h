@@ -9,7 +9,8 @@
 int b1018();
 int b1181();
 int b1259();
-int fff();
+int b1436();
+int b1546();
 
 
 #endif //BJ_CLASS2_H
