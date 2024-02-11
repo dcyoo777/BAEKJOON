@@ -20,6 +20,7 @@ int b2775();
 int b2798();
 int b2869();
 int b4153();
+int b10989();
 
 
 #endif //BJ_CLASS2_H
