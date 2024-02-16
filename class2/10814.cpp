@@ -3,15 +3,7 @@
 
 using namespace std;
 
-int compare(int w1, int h1, int w2, int h2) {
-    if (w1 > w2 && h1 > h2) {
-        return 1;
-    }
-    if (w2 > w1 && h2 > h1) {
-        return -1;
-    }
-    return 0;
-}
+const int MAX_AGE = 200;
 
 int b10814() {
 
@@ -22,26 +14,26 @@ int b10814() {
 
     cin >> n;
 
-    int arr[n][3];
+    int ages[n];
+    string names[n];
+
+    int counts[MAX_AGE + 1];
+    int result[MAX_AGE + 1][n];
+
+    for (int i = 1; i < MAX_AGE + 1; i++) {
+        counts[i] = 0;
+    }
 
     for (int i = 0; i < n; i++) {
-        cin >> arr[i][0] >> arr[i][1];
-        arr[i][2] = 1;
-        for (int j = 0; j < i; j++){
-            int compareFlag = compare(arr[j][0], arr[j][1], arr[i][0], arr[i][1]);
-            if (compareFlag > 0) {
-                arr[i][2]++;
-            } else if (compareFlag < 0) {
-                arr[j][2]++;
-            }
+        cin >> ages[i] >> names[i];
+        result[ages[i]][counts[ages[i]]++] = i;
+    }
+
+    for (int i = 1; i < MAX_AGE + 1; i++) {
+        for (int j = 0; j < counts[i]; j++) {
+            cout << i << ' ' << names[result[i][j]] << '\n';
         }
-
     }
-
-    for (int i = 0; i < n - 1; i++) {
-        cout << arr[i][2] << ' ';
-    }
-    cout << arr[n-1][2];
 
     return 0;
 }
