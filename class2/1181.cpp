@@ -1,53 +1,40 @@
 #include "class2.h"
 #include "iostream"
+#include <cstring>
+#include <cstdlib>
 
 using namespace std;
 
-int compareWords(const string& str1, const string& str2) {
-    if (str1.length() > str2.length()) {
-        return 1;
-    } else if (str1.length() < str2.length()) {
-        return -1;
+int compare1181(const void *a, const void *b) {
+    string str1 = (char *)a;
+    string str2 = (char *)b;
+    int lenDiff = str1.length() - str2.length();
+    if (lenDiff != 0) {
+        return lenDiff;
     }
-    return str1.compare(str2);
+    return strcmp((char *)a, (char *)b);
 }
 
 int b1181() {
 
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
     int n;
-    int len = 1;
     cin >> n;
-    string dic[n + 1];
+    char dic[n][51];
 
-    cin >> dic[0];
-
-
-    for (int i=1; i<n; i++) {
-        string str;
-        cin >> str;
-        for (int j=0; j<i; j++) {
-            int condition = compareWords(str, dic[j]);
-            if (condition == 0) {
-                break;
-            } else if (condition > 0) {
-                if (j + 1 == i) {
-                    dic[i] = str;
-                    len++;
-                    break;
-                }
-            } else {
-                for (int k=0; k<i-j; k++) {
-                    dic[i-k] = dic[i-k-1];
-                }
-                dic[j] = str;
-                len++;
-                break;
-            }
-        }
+    for (int i = 0; i < n; i++) {
+        cin >> dic[i];
     }
 
-    for (int i=0; i<len; i++) {
-        std::cout << dic[i] << '\n';
+    qsort(dic, n, sizeof(dic[0]), compare1181);
+
+    std::cout << dic[0] << '\n';
+    for (int i = 1; i < n; i++) {
+        if (strcmp(dic[i - 1], dic[i]) != 0) {
+            std::cout << dic[i] << '\n';
+        }
     }
 
     return 0;
