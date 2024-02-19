@@ -3,12 +3,13 @@
 
 using namespace std;
 
-class Queue {
+class Deque {
 
 private:
+    int max = 10000;
     int start;
     int end;
-    int arr[10001];
+    int arr[10000];
 
 public:
 
@@ -17,23 +18,39 @@ public:
         end = 0;
     }
 
-    void push(int num) {
-        arr[end++] = num;
-    }
-
     [[nodiscard]] int size() const {
-        return (end + 10001 - start) % 10001;
+        return (max + end - start) % max;
     }
 
     [[nodiscard]] int empty() const {
-        return end == start ? 1 : 0;
+        return end == start;
     }
 
-    int pop() {
+    void push_front(int num) {
+        start = (max + start - 1) % max;
+        arr[start] = num;
+    }
+
+    void push_back(int num) {
+        arr[end] = num;
+        end = (max + end + 1) % max;
+    }
+
+    int pop_front() {
         if (empty()) {
             return -1;
         }
-        return arr[start++];
+        int result = arr[start];
+        start = (max + start + 1) % max;
+        return result;
+    }
+
+    int pop_back() {
+        if (empty()) {
+            return -1;
+        }
+        end = (max + end - 1) % max;
+        return arr[end];
     }
 
     int front() {
@@ -47,25 +64,27 @@ public:
         if (empty()) {
             return -1;
         }
-        return arr[end - 1];
+        return arr[(max + end - 1) % max];
     }
 
     void print() {
         cout << "start : " << start << '\n';
         cout << "end : " << end << '\n';
-        for (int i = start; i < end; i++) {
+        int i = start;
+        while (i != end) {
             cout << arr[i] << ' ';
+            i = (max + i + 1) % max;
         }
         cout << "\n\n";
     }
 };
 
-int b10845() {
+int b10866() {
 
     ios::sync_with_stdio(false);
     cin.tie(0);
 
-    Queue q{};
+    Deque q{};
     q.init();
     int n, m;
     string keyword;
@@ -75,11 +94,16 @@ int b10845() {
 
     for (int i = 0; i < n; i++) {
         cin >> keyword;
-        if (keyword == "push") {
+        if (keyword == "push_front") {
             cin >> m;
-            q.push(m);
-        } else if (keyword == "pop") {
-            cout << q.pop() << '\n';
+            q.push_front(m);
+        } else if (keyword == "push_back") {
+            cin >> m;
+            q.push_back(m);
+        } else if (keyword == "pop_front") {
+            cout << q.pop_front() << '\n';
+        } else if (keyword == "pop_back") {
+            cout << q.pop_back() << '\n';
         } else if (keyword == "size") {
             cout << q.size() << '\n';
         } else if (keyword == "empty") {
