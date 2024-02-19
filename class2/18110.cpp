@@ -1,86 +1,69 @@
 #include "class2.h"
+#include <cmath>
 #include "iostream"
 
 using namespace std;
 
-class Stack {
-
-private:
-    int max;
-    int last;
-    int *arr;
-
-public:
-    void init(int num);
-    void push(int num);
-    int pop();
-    int size();
-    int empty();
-    int top();
-};
-
-void Stack::init(int num) {
-    max = num;
-    last = 0;
-    arr = new int(num);
-}
-
-void Stack::push(int num) {
-    arr[last++] = num;
-}
-
-int Stack::pop() {
-    if (last == 0) {
-        return -1;
-    }
-    return arr[--last];
-}
-
-int Stack::size() {
-    return last;
-}
-
-int Stack::empty() {
-    return last ? 0 : 1;
-}
-
-int Stack::top() {
-    if (last == 0) {
-        return -1;
-    }
-    return arr[last - 1];
-}
-
-
-
-int b10828() {
+int b18110() {
 
     ios::sync_with_stdio(false);
     cin.tie(0);
 
-    int n, m;
-    string keyword;
+    int n;
+    int sum = 0, low_sum = 0, high_sum = 0;
 
     cin >> n;
 
-    Stack s{};
-    s.init(10001);
+    if (n == 0) {
+        cout << 0;
+        return 0;
+    }
+
+    int arr[n];
+    int d = (int)round((double)n * 0.15);
+    int low[d], high[d];
+
+//    cout << d;
+
+    for (int i = 0; i < d; i++) {
+        low[i] = 31;
+        high[i] = 0;
+    }
 
     for (int i = 0; i < n; i++) {
-        cin >> keyword;
-        if (keyword == "push") {
-            cin >> m;
-            s.push(m);
-        } else if (keyword == "pop") {
-            cout << s.pop() << '\n';
-        } else if (keyword == "size") {
-            cout << s.size() << '\n';
-        } else if (keyword == "empty") {
-            cout << s.empty() << '\n';
-        } else if (keyword == "top") {
-            cout << s.top() << '\n';
+        cin >> arr[i];
+
+        for (int j = 0; j < d; j++) {
+            if (arr[i] < low[j]) {
+                low[j] = arr[i];
+                for (int k = d - 1; k > j; k--) {
+                    low[k] = low[k - 1];
+                }
+                break;
+            }
         }
+
+        for (int j = 0; j < d; j++) {
+            if (arr[i] > high[j]) {
+                high[j] = arr[i];
+                for (int k = d - 1; k > j; k--) {
+                    high[k] = high[k - 1];
+                }
+                break;
+            }
+        }
+
+        sum += arr[i];
     }
+
+    for (int i = 0; i < d; i++) {
+        low_sum += low[i];
+        high_sum += high[i];
+    }
+
+//    cout << sum << '\n' << low_sum << '\n' << high_sum << '\n';
+
+    cout << (int)round((double)(sum - low_sum - high_sum) / (double)(n - 2 * d));
 
     return 0;
 }
