@@ -3,51 +3,70 @@
 
 using namespace std;
 
-class Stack {
+class Queue {
 
 private:
-    int last;
+    int start;
+    int end;
     int arr[10001];
 
 public:
+
     void init() {
-        last = 0;
+        start = 0;
+        end = 0;
     }
 
     void push(int num) {
-        arr[last++] = num;
-    }
-
-    int pop() {
-        if (last == 0) {
-            return -1;
-        }
-        return arr[--last];
+        arr[end++] = num;
     }
 
     [[nodiscard]] int size() const {
-        return last;
+        return (end + 10001 - start) % 10001;
     }
 
     [[nodiscard]] int empty() const {
-        return last ? 0 : 1;
+        return end == start ? 1 : 0;
     }
 
-    int top() {
-        if (last == 0) {
+    int pop() {
+        if (empty()) {
             return -1;
         }
-        return arr[last - 1];
+        return arr[start++];
+    }
+
+    int front() {
+        if (empty()) {
+            return -1;
+        }
+        return arr[start];
+    }
+
+    int back() {
+        if (empty()) {
+            return -1;
+        }
+        return arr[end - 1];
+    }
+
+    void print() {
+        cout << "start : " << start << '\n';
+        cout << "end : " << end << '\n';
+        for (int i = start; i < end; i++) {
+            cout << arr[i] << ' ';
+        }
+        cout << "\n\n";
     }
 };
 
-int b10828() {
+int b10845() {
 
     ios::sync_with_stdio(false);
     cin.tie(0);
 
-    Stack s{};
-    s.init();
+    Queue q{};
+    q.init();
     int n, m;
     string keyword;
 
@@ -58,16 +77,19 @@ int b10828() {
         cin >> keyword;
         if (keyword == "push") {
             cin >> m;
-            s.push(m);
+            q.push(m);
         } else if (keyword == "pop") {
-            cout << s.pop() << '\n';
+            cout << q.pop() << '\n';
         } else if (keyword == "size") {
-            cout << s.size() << '\n';
+            cout << q.size() << '\n';
         } else if (keyword == "empty") {
-            cout << s.empty() << '\n';
-        } else if (keyword == "top") {
-            cout << s.top() << '\n';
+            cout << q.empty() << '\n';
+        } else if (keyword == "front") {
+            cout << q.front() << '\n';
+        } else if (keyword == "back") {
+            cout << q.back() << '\n';
         }
+//        q.print();
     }
 
     return 0;
