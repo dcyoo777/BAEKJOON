@@ -12,6 +12,7 @@ int b1259();
 int b1436();
 int b1546();
 int b1654();
+int b1874();
 int b1920();
 int b1924();
 int b1966();
