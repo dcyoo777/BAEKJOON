@@ -6,5 +6,7 @@
 #define BJ_CLASS3_H
 
 int b1003();
+int b1012();
+int b1074();
 
 #endif //BJ_CLASS3_H

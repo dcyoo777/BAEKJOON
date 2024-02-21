@@ -5,6 +5,9 @@ using namespace std;
 
 int b1003() {
 
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
     int t;
     int fill = 1;
     int fibos[41][2];
