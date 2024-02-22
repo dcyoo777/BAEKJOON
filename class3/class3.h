@@ -8,5 +8,7 @@
 int b1003();
 int b1012();
 int b1074();
+int b1107();
+int b1260();
 
 #endif //BJ_CLASS3_H
