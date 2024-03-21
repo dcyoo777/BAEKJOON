@@ -11,5 +11,6 @@ int b1074();
 int b1107();
 int b1260();
 int b1389();
+int b1463();
 
 #endif //BJ_CLASS3_H
