@@ -32,7 +32,7 @@ int b1654() {
     over++;
     target /= n;
 
-    cout << "under : " << under << "\tover : " << over << "\ttarget : " << target << '\n';
+//    cout << "under : " << under << "\tover : " << over << "\ttarget : " << target << '\n';
 
     while (over - under > 1) {
         int cnt = count(arr, k, target);
@@ -42,7 +42,7 @@ int b1654() {
             under = target;
         }
         target = (over + under) / 2;
-        cout << "under : " << under << "\tover : " << over << "\ttarget : " << target << "\tcount : " << cnt << '\n';
+//        cout << "under : " << under << "\tover : " << over << "\ttarget : " << target << "\tcount : " << cnt << '\n';
     }
 
     cout << under;
